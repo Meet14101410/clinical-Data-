@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Data Entry</title>
+</head>
+<body>
+    <h2>Patient Demographics</h2>
+    <form action="process_data.php" method="post">
+        <label for="patientId">Patient ID:</label><br>
+        <input type="text" id="patientId" name="patientId" required><br><br>
+        
+        <label for="trialId">Trial ID:</label><br>
+        <input type="text" id="trialId" name="trialId" required><br><br>
+        
+        <label for="age">Age (years):</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+        
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="">-- Select --</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+        
+        <input type="submit" value="Submit Data">
+    </form>
+</body>
+</html>
