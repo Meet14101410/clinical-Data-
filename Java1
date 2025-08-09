@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class ClinicalDataManager {
+    private final List<CrfDataPoint> dataStore; // In-memory store for demo
+
+    public ClinicalDataManager() {
+        this.dataStore = new ArrayList<>();
+    }
+
+    // Method to add new data to the system
+    public void addDataPoint(CrfDataPoint dataPoint) {
+        // In a real system, this would involve database insertion.
+        dataStore.add(dataPoint);
+        System.out.println("Added data point: " + dataPoint.getVariableName());
+    }
+
+    // Conceptual method to validate data based on a rule (e.g., a query)
+    public boolean validateVitalSigns(String patientId, double minBp, double maxBp) {
+        // In a real CDMS, this would query a database for all BP values for the patient.
+        Optional<CrfDataPoint> bpData = dataStore.stream()
+            .filter(dp -> dp.getPatientId().equals(patientId) && dp.getVariableName().equals("Systolic_BP"))
+            .findFirst();
+
+        if (bpData.isPresent()) {
+            try {
+                double systolicBp = Double.parseDouble(bpData.get().getValue());
+                return systolicBp >= minBp && systolicBp <= maxBp;
+            } catch (NumberFormatException e) {
+                System.out.println("Data validation failed: Value is not a number.");
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        ClinicalDataManager manager = new ClinicalDataManager();
+
+        // Simulate entering a patient's blood pressure reading
+        CrfDataPoint bpReading = new CrfDataPoint(
+            "P001", "TRIAL-001", "Vital Signs", "Systolic_BP", "125.5"
+        );
+        manager.addDataPoint(bpReading);
+        
+        System.out.println("\nValidating data...");
+        // Check if the reading is within a normal range (e.g., 90-140)
+        boolean isValid = manager.validateVitalSigns("P001", 90.0, 140.0);
+        System.out.println("Blood pressure reading is valid: " + isValid);
+    }
+}
