@@ -1,0 +1,37 @@
+import java.time.LocalDate;
+import java.util.UUID;
+
+public class CrfDataPoint {
+    private final String dataPointId;
+    private final String patientId;
+    private final String trialId;
+    private final String formName; // e.g., "Vital Signs"
+    private final String variableName; // e.g., "Systolic_BP"
+    private final String value;
+    private final LocalDate entryDate;
+
+    public CrfDataPoint(String patientId, String trialId, String formName, String variableName, String value) {
+        this.dataPointId = UUID.randomUUID().toString();
+        this.patientId = patientId;
+        this.trialId = trialId;
+        this.formName = formName;
+        this.variableName = variableName;
+        this.value = value;
+        this.entryDate = LocalDate.now();
+    }
+
+    // Getters
+    public String getDataPointId() { return dataPointId; }
+    public String getPatientId() { return patientId; }
+    public String getTrialId() { return trialId; }
+    public String getFormName() { return formName; }
+    public String getVariableName() { return variableName; }
+    public String getValue() { return value; }
+    public LocalDate getEntryDate() { return entryDate; }
+
+    @Override
+    public String toString() {
+        return String.format("Data Point ID: %s, Patient ID: %s, Form: %s, Variable: %s, Value: %s",
+                             dataPointId, patientId, formName, variableName, value);
+    }
+}
